@@ -12,6 +12,9 @@ class Client extends Model
 
     const PER_PAGE     = 200;
     protected $guarded = [];
+    protected $casts   = [
+        'created_at' => 'date:Y-m-d',
+    ];
 
     public function getProfileAttribute($key)
     {

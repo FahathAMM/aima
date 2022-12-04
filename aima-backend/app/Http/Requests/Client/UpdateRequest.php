@@ -23,15 +23,27 @@ class UpdateRequest extends FormRequest
      */
     public function rules()
     {
-            return [
-                'name'      => 'min:3',
-                'mobile'    => 'max:10',
-                'telephone' => 'max:10',
-                'city'      => 'min:3',
-                'profile'   => 'nullable|mimes:png,jpg',
-                'gender'    => 'nullable',
-                'address'   => 'nullable',
-                'job'       => 'nullable',
-            ];
+        return [
+            'name'      => 'min:3',
+            'mobile'    => 'max:10',
+            'telephone' => 'max:10',
+            'city'      => 'min:3',
+            'profile'   => 'nullable|mimes:png,jpg',
+            'gender'    => 'nullable',
+            'address'   => 'nullable',
+            'job'       => 'nullable',
+        ];
+    }
+
+    public function BankData($data)
+    {
+        return [
+            'description' => $this->description,
+            'owner'       => $this->owner,
+            'branch'      => $this->branch,
+            'account'     => $this->account,
+            'name'        => $this->bank_name,
+            'client_id'   => $data->id,
+        ];
     }
 }

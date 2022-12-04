@@ -10,7 +10,7 @@
 
           <li class="submenu" v-if="item.hasChild">
             <a href="#">
-              <i class="fa fa-dashboard"></i>
+              <i :class="item.icon"></i>
               <span> {{ item.title }}</span>
               <span class="menu-arrow"></span>
             </a>
@@ -28,7 +28,7 @@
           </li>
           <li v-else>
             <a href="#"
-              ><i class="fa fa-users"></i> <span>{{ item.title }}</span></a
+              ><i :class="item.icon"></i> <span>{{ item.title }}</span></a
             >
           </li>
         </ul>
@@ -44,31 +44,37 @@ export default {
       lists: [
         {
           label: "main",
+          icon: "fa fa-dashboard",
           title: "Dashboard",
           hasChild: [
             {
               title: "Admin Dashboard",
               to: "/",
+              icon: "fa fa-dashboard",
             },
             {
               title: "Employee Dashboard",
               to: "/employee",
+              icon: "fa fa-dashboard",
             },
           ],
         },
         {
           label: "Clients",
+          icon: "fa fa-users",
           title: "Clients",
           hasChild: [
             {
               title: "All Clients",
               to: "/client",
+              icon: "fa fa-users",
             },
           ],
         },
         {
           label: "Products",
           title: "single",
+          icon: "fa fa-users",
         },
       ],
     };

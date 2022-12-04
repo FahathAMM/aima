@@ -49,7 +49,7 @@ class PurchaseController extends Controller
         $created = $this->repo->insertMultiArray($request->all());
 
         if ($created) {
-            return $this->repo->returnToApi($created, 'Purchse succusully created');
+            return $this->repo->returnToApi($created, 'Purchase successfully created');
         }
 
     }
@@ -122,7 +122,7 @@ class PurchaseController extends Controller
             ],
             [
                 'title'  => 'Total Profit',
-                'amount' => $selling_amount - $purchase_amount,
+                'amount' => number_format($selling_amount - $purchase_amount, 2),
             ],
         ];
 

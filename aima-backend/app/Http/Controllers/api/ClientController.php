@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Bank\UpdateRequest;
 use App\Http\Requests\Client\StoreRequest;
 use App\Models\Bank\Bank;
 use App\Models\Client\Client;
@@ -73,9 +74,9 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Client $client)
     {
-        //
+        return $this->repo->returnToApi($client->with('bank')->first(), null);
     }
 
     /**
@@ -96,7 +97,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Client $client, Request $request)
+    public function update(Client $client, UpdateRequest $request)
     {
         $data = $request->all();
         if ($request->hasFile('profile')) {

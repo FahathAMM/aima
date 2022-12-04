@@ -54,7 +54,6 @@ class StoreRequest extends FormRequest
             'name'        => $this->bank_name,
             'client_id'   => $data->id,
         ];
-
     }
 
 }

@@ -83,7 +83,6 @@ class BaseRepository implements BaseRepositoryInterface
             foreach ($collection as $c) {
                 $this->model->create($c);
             }
-            return $this->model->insert($collection);
         } catch (\Throwable$th) {
             throw $th;
         }

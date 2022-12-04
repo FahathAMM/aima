@@ -14,12 +14,12 @@
     <div class="page-header">
       <div class="row">
         <div class="col-sm-12">
-          <h3 class="page-title">Profile</h3>
+          <h3 class="page-title">Purchase</h3>
           <ul class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="index.html">Dashboard</a>
+              <a>Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Profile</li>
+            <li class="breadcrumb-item active">Purchase</li>
           </ul>
         </div>
       </div>
@@ -34,7 +34,9 @@
               <div class="profile-img-wrap">
                 <div class="profile-img">
                   <a href="#"
-                    ><img alt="" src="assets/img/profiles/avatar-02.jpg"
+                    ><img
+                      alt=""
+                      src="https://image.shutterstock.com/image-photo/stock-photo-portrait-of-smiling-red-haired-millennial-man-looking-at-camera-sitting-in-caf-or-coffeeshop-250nw-1194497251.jpg"
                   /></a>
                 </div>
               </div>
@@ -42,12 +44,18 @@
                 <div class="row">
                   <div class="col-md-5">
                     <div class="profile-info-left">
-                      <h3 class="user-name m-t-0 mb-0">John Doe</h3>
-                      <h6 class="text-muted">UI/UX Design Team</h6>
-                      <small class="text-muted">Web Designer</small>
-                      <div class="staff-id">Employee ID : FT-0001</div>
+                      <h3 class="user-name m-t-0 mb-0">
+                        {{ client.name || "---" }}
+                      </h3>
+                      <h6 class="text-muted">{{ client.job || "---" }}</h6>
+                      <small class="text-muted">{{
+                        client.gender || "---"
+                      }}</small>
+                      <div class="staff-id">
+                        Employee ID : FT-00{{ client.id || "---" }}
+                      </div>
                       <div class="small doj text-muted">
-                        Date of Join : 1st Jan 2013
+                        Date of Join : {{ client.created_at || "---" }}
                       </div>
                       <div class="staff-msg">
                         <a class="btn btn-custom" href="chat.html"
@@ -60,41 +68,35 @@
                     <ul class="personal-info">
                       <li>
                         <div class="title">Phone:</div>
-                        <div class="text"><a href="">9876543210</a></div>
+                        <div class="text">
+                          <a href="">{{ client.mobile || "---" }}</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="title">Telephone:</div>
+                        <div class="text">
+                          <a href="">{{ client.telephone || "---" }}</a>
+                        </div>
                       </li>
                       <li>
                         <div class="title">Email:</div>
                         <div class="text">
-                          <a href="">johndoe@example.com</a>
+                          <a href="">{{ client.mobile || "---" }}</a>
                         </div>
                       </li>
                       <li>
-                        <div class="title">Birthday:</div>
-                        <div class="text">24th July</div>
+                        <div class="title">City:</div>
+                        <div class="text">{{ client.city || "---" }}</div>
                       </li>
                       <li>
                         <div class="title">Address:</div>
                         <div class="text">
-                          1861 Bayonne Ave, Manchester Township, NJ, 08759
+                          {{ client.address || "---" }}
                         </div>
                       </li>
                       <li>
                         <div class="title">Gender:</div>
-                        <div class="text">Male</div>
-                      </li>
-                      <li>
-                        <div class="title">Reports to:</div>
-                        <div class="text">
-                          <div class="avatar-box">
-                            <div class="avatar avatar-xs">
-                              <img
-                                src="assets/img/profiles/avatar-16.jpg"
-                                alt=""
-                              />
-                            </div>
-                          </div>
-                          <a href="profile.html"> Jeffery Lalor </a>
-                        </div>
+                        <div class="text">{{ client.gender || "---" }}</div>
                       </li>
                     </ul>
                   </div>
@@ -365,7 +367,7 @@
           <div class="col-md-2 d-flex pa-0">
             <div class="col-md-12 col-sm-12 pt-0 col-lg-12 col-xl-3">
               <div
-                class="card dash-widget"
+                class="card dash-widget elevation-0"
                 v-for="(item, index) in totalCount"
                 :key="index"
               >
@@ -416,19 +418,23 @@
                 <ul class="personal-info">
                   <li>
                     <div class="title">Bank name</div>
-                    <div class="text">ICICI Bank</div>
+                    <div class="text">{{ bank.name || "---" }}</div>
+                  </li>
+                  <li>
+                    <div class="title">Branch</div>
+                    <div class="text">{{ bank.branch || "---" }}</div>
                   </li>
                   <li>
                     <div class="title">Bank account No.</div>
-                    <div class="text">159843014641</div>
+                    <div class="text">{{ bank.name || "---" }}</div>
                   </li>
                   <li>
-                    <div class="title">IFSC Code</div>
-                    <div class="text">ICI24504</div>
+                    <div class="title">Owner</div>
+                    <div class="text">{{ bank.owner || "---" }}</div>
                   </li>
                   <li>
-                    <div class="title">PAN No</div>
-                    <div class="text">TC000Y56</div>
+                    <div class="title">Description</div>
+                    <div class="text">{{ bank.description || "---" }}</div>
                   </li>
                 </ul>
               </div>
@@ -1292,6 +1298,8 @@ export default {
         profit: 0,
         selling: 0,
       },
+      client: {},
+      bank: {},
       purchseData: [],
       errors: [],
       data: [],
@@ -1323,6 +1331,7 @@ export default {
   created() {
     this.getData();
     this.getTotalCount();
+    this.getClient();
   },
   methods: {
     totalAmount() {
@@ -1400,6 +1409,18 @@ export default {
         .get(`get_total_count/${id}`)
         .then(({ data }) => {
           this.totalCount = data;
+          console.log(data);
+        })
+        .catch((err) => console.log(err));
+    },
+
+    getClient() {
+      let id = this.$route.params.id;
+      this.$axios
+        .get(`clients/${id}`)
+        .then(({ data }) => {
+          this.client = data.record;
+          this.bank = data.record.bank;
           console.log(data);
         })
         .catch((err) => console.log(err));
